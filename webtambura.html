@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Web Tambura</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3758220358268980"
+        crossorigin="anonymous"></script>
+    <style>
+        table {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid teal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            background-color: #ebebff;
+        }
+
+        .slidecontainer {
+            width: 100%;
+            /* Width of the outside container */
+        }
+
+        /* The slider itself */
+        .slider {
+            -webkit-appearance: none;
+            /* Override default CSS styles */
+            appearance: none;
+            width: 100%;
+            /* Full-width */
+            height: 25px;
+            /* Specified height */
+            background: #d3d3d3;
+            /* Grey background */
+            outline: none;
+            /* Remove outline */
+            opacity: 0.7;
+            /* Set transparency (for mouse-over effects on hover) */
+            -webkit-transition: .2s;
+            /* 0.2 seconds transition on hover */
+            transition: opacity .2s;
+        }
+
+        /* Mouse-over effects */
+        .slider:hover {
+            opacity: 1;
+            /* Fully shown on mouse-over */
+        }
+
+        /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            /* Override default look */
+            appearance: none;
+            width: 25px;
+            /* Set a specific slider handle width */
+            height: 25px;
+            /* Slider handle height */
+            background: #4CAF50;
+            /* Green background */
+            cursor: pointer;
+            /* Cursor on hover */
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            /* Set a specific slider handle width */
+            height: 25px;
+            /* Slider handle height */
+            background: #4CAF50;
+            /* Green background */
+            cursor: pointer;
+            /* Cursor on hover */
+        }
+
+        /* *******************Check Box****************** */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .fancycheckbox {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .fancycheckbox:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked+.fancycheckbox {
+            background-color: #2196F3;
+        }
+
+        input:focus+.fancycheckbox {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked+.fancycheckbox:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded fancycheckboxs */
+        .fancycheckbox.round {
+            border-radius: 34px;
+        }
+
+        .fancycheckbox.round:before {
+            border-radius: 50%;
+        }
+
+        /* ── 3-Column Ad Layout ─────────────────────────────────── */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .page-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .center-content {
+            flex: 0 0 auto;
+            width: 100%;
+            max-width: 500px;
+            min-width: 0;
+            box-sizing: border-box;
+            background-color: #ebebeb;
+        }
+
+        .ad-column {
+            /* Start with the 160px base */
+            flex: 0 0 160px;
+            width: 160px;
+            min-height: 600px;
+            display: block;
+            overflow: hidden;
+        }
+
+        /* If the screen is wide enough to support 300px sidebars + 500px center */
+        @media (min-width: 1200px) {
+            .ad-column {
+                flex: 0 0 300px;
+                width: 300px;
+            }
+        }
+
+        .ad-sticky {
+            position: sticky;
+            top: 10px;
+            display: flex;
+            justify-content: center;
+            padding: 4px 0;
+            width: 100%;
+            /* Ensures it fills the 160px or 300px column */
+        }
+
+        @media (max-width: 820px) {
+            .ad-column {
+                display: none !important;
+            }
+
+            /* Also explicitly hide the ad inside it to stop the script from trying to fill it */
+            .ad-column .adsbygoogle {
+                display: none !important;
+            }
+        }
+
+        /* ─────────────────────────────────────────────────────────── */
+
+        /* ***************Radio Button*************** */
+        /* The container */
+        .container input {
+            display: none;
+        }
+
+        .container .checkmark {
+            background-color: #EBEBEB;
+            color: black;
+        }
+
+        .container input:checked~.checkmark {
+            background-color: teal;
+            color: white;
+        }
+    </style>
+    <script>
+        var debug = false;
+
+        function onPageLoad() {
+            if (typeof (Storage) !== "undefined") {
+                if (localStorage.getItem("webtambura.pitch") != null) {
+                    pitch = localStorage.getItem("webtambura.pitch");
+                    document.querySelector('input[value="' + pitch + '"]').checked = true;
+                }
+                if (localStorage.getItem("webtambura.volume") != null) {
+                    document.getElementById("myRange").value = localStorage.getItem("webtambura.volume");
+                    onGainChange();
+                }
+                if (localStorage.getItem("webtambura.madhyam") != null) {
+                    if (localStorage.getItem("webtambura.madhyam") == "m") {
+                        document.getElementById("madhyam").checked = true;
+                    }
+                }
+            }
+        }
+
+        var AudioContext = AudioContext || webkitAudioContext,
+            context = null,
+            sourceNode = null,
+            gainNode = null,
+            audioBuffer = null;
+
+        function resetSound() {
+            if (sourceNode != null) {
+                sourceNode.stop(0);
+                sourceNode = null;
+            }
+            sourceNode = context.createBufferSource();
+            gainNode.gain.value = document.getElementById("myRange").value / 100;
+            sourceNode.connect(gainNode).connect(context.destination);
+            sourceNode.buffer = audioBuffer;
+            sourceNode.loop = true;
+            sourceNode.start(0);
+        }
+
+        function changePitch() {
+            if (typeof (Storage) !== "undefined") {
+                localStorage.setItem("webtambura.pitch", document.querySelector('input[name="pitch"]:checked').value);
+                localStorage.setItem("webtambura.madhyam", ((document.getElementById("madhyam").checked) ? "m" : ""));
+            }
+
+            var button = document.getElementById("PlayStop");
+            if (button.innerText == "Stop") {
+                onClickPlay();
+                onClickPlay();
+            }
+
+            document.getElementById("PlayStop").focus();
+        }
+
+        function onClickPlay() {
+            if (debug) console.log("Inside onClickPlay")
+            var button = document.getElementById("PlayStop");
+
+            if (button.innerText == "Play") {
+                if (context == null) {
+                    context = new AudioContext();
+                    gainNode = context.createGain();
+                }
+
+                var pitchSelected = document.querySelector('input[name="pitch"]:checked').value;
+                var madhyamSruthi = (document.getElementById("madhyam").checked) ? "m" : "";
+
+                // Fetch the sample
+                var request = new XMLHttpRequest();
+                request.open('GET', madhyamSruthi + pitchSelected + ".wav", true);
+                request.responseType = 'arraybuffer';
+
+                request.addEventListener('load', function () {
+                    context.decodeAudioData(
+                        request.response,
+                        function (buffer) {
+                            if (debug) console.log("Got sample. Size ", buffer.length);
+                            audioBuffer = buffer;
+                            resetSound();
+                        },
+                        function (e) {
+                            console.error('ERROR: context.decodeAudioData:', e);
+                        }
+                    );
+                });
+
+                request.send();
+
+                button.innerText = "Stop"
+            } else {
+                if (sourceNode != null) {
+                    sourceNode.stop(0);
+                    sourceNode = null;
+                }
+                button.innerText = "Play"
+            }
+        }
+        function onGainChange() {
+            if (debug) console.log("Inside onGainChange");
+            if (typeof (Storage) !== "undefined") {
+                localStorage.setItem("webtambura.volume", document.getElementById("myRange").value);
+            }
+            document.getElementById('volumeLevel').innerText = document.getElementById("myRange").value + "%";
+            if (gainNode != null) {
+                gainNode.gain.value = document.getElementById("myRange").value / 100
+            }
+
+            document.getElementById("PlayStop").focus();
+        }
+    </script>
+</head>
+
+<body onload="onPageLoad()">
+    <!-- ── 3-Column Page Layout ───────────────────────────────────── -->
+    <div class="page-wrapper">
+
+        <!-- LEFT AD COLUMN — delete this block to remove left ad -->
+        <div class="ad-column">
+            <div class="ad-sticky">
+                <ins class="adsbygoogle" style="display:block; min-width:160px; max-width:300px; min-height:600px;"
+                    data-ad-client="ca-pub-3758220358268980" data-ad-slot="4252269065" data-ad-format="auto"
+                    data-full-width-responsive="false"></ins>
+                <script>
+                    // Check if the container is visible before requesting the ad
+                    const adColumn = document.querySelector('.ad-column');
+                    if (adColumn && window.getComputedStyle(adColumn).display !== 'none') {
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    }
+                </script>
+            </div>
+        </div>
+
+        <!-- CENTER CONTENT — original page, untouched -->
+        <div class="center-content">
+
+            <div class="w3-container w3-teal">
+                <h3>Web Tambura</h3>
+            </div>
+            <div class="w3-container">
+
+                <div class="w3-container w3-card w3-white">
+                    <h3 class="w3-color w3-blue-gray w3-center">Volume: <span id="volumeLevel"></span></h3>
+                    <div class="slidecontainer">
+                        <input type="range" min="1" max="100" value="30" class="slider" id="myRange"
+                            onchange="onGainChange()">
+                    </div>
+                </div>
+                <hr>
+
+                <div class="w3-container w3-card w3-white">
+                    <h3 class="w3-color w3-blue-gray w3-center">
+                        <span class="w3-left-align">Madhyam Shruthi</span>
+                        <span class="w3-right-align">
+                            <label class="switch">
+                                <input id="madhyam" type="checkbox" value="m" onclick="changePitch()">
+                                <span class="fancycheckbox round"></span>
+                            </label>
+                        </span>
+                    </h3>
+                </div>
+                <hr>
+
+                <div class="w3-container w3-card w3-white">
+                    <h3 class="w3-color w3-blue-gray w3-center">Select Pitch</h3>
+
+                    <div>
+                        <table>
+                            <tr>
+                                <th>Gents</th>
+                                <th>Instruments used one</th>
+                                <th>Ladies</th>
+                                <th>Kids</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="container">
+                                        <input type="radio" onclick="changePitch()" name="pitch" value="b">
+                                        <span class="checkmark w3-button w3-block">B</span>
+                                    </label>
+
+                                    <label class="container">
+                                        <input type="radio" onclick="changePitch()" name="pitch" value="c"
+                                            checked="checked">
+                                        <span class="checkmark w3-button w3-block">C</span>
+                                    </label>
+
+                                    <label class="container">
+                                        <input type="radio" onclick="changePitch()" name="pitch" value="cs">
+                                        <span class="checkmark w3-button w3-block">C#</span>
+                                    </label>
+
+                                </td>
+                                <td>
+
+                                    <label class="container">
+                                        <input type="radio" onclick="changePitch()" name="pitch" value="d">
+                                        <span class="checkmark w3-button w3-block">D</span>
+                                    </label>
+
+                                    <label class="container">
+                                        <input type="radio" onclick="changePitch()" name="pitch" value="ds">
+                                        <span class="checkmark w3-button w3-block">D#</span>
+                                    </label>
+
+                                    <label class="container">
+                                        <input type="radio" onclick="changePitch()" name="pitch" value="e">
+                                        <span class="checkmark w3-button w3-block">E</span>
+                                    </label>
+
+                                </td>
+                                <td>
+
+                                    <label class="container">
+                                        <input type="radio" onclick="changePitch()" name="pitch" value="f">
+                                        <span class="checkmark w3-button w3-block">F</span>
+                                    </label>
+
+                                    <label class="container">
+                                        <input type="radio" onclick="changePitch()" name="pitch" value="fs">
+                                        <span class="checkmark w3-button w3-block">F#</span>
+                                    </label>
+
+                                    <label class="container">
+                                        <input type="radio" onclick="changePitch()" name="pitch" value="g">
+                                        <span class="checkmark w3-button w3-block">G</span>
+                                    </label>
+
+                                </td>
+                                <td>
+
+                                    <label class="container">
+                                        <input type="radio" onclick="changePitch()" name="pitch" value="gs">
+                                        <span class="checkmark w3-button w3-block">G#</span>
+                                    </label>
+
+                                    <label class="container">
+                                        <input type="radio" onclick="changePitch()" name="pitch" value="a">
+                                        <span class="checkmark w3-button w3-block">A</span>
+                                    </label>
+
+                                    <label class="container">
+                                        <input type="radio" onclick="changePitch()" name="pitch" value="as">
+                                        <span class="checkmark w3-button w3-block">A#</span>
+                                    </label>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+                <p><button class="w3-button w3-green w3-block" id="PlayStop" onclick="onClickPlay()">Play</button>
+                </p>
+
+            </div>
+
+        </div><!-- end .center-content -->
+
+        <!-- RIGHT AD COLUMN — delete this block to remove right ad -->
+        <div class="ad-column">
+            <div class="ad-sticky">
+                <ins class="adsbygoogle" style="display:block; min-width:160px; max-width:300px; min-height:600px;"
+                    data-ad-client="ca-pub-3758220358268980" data-ad-slot="3724807997" data-ad-format="auto"
+                    data-full-width-responsive="false"></ins>
+                <script>
+                    // Check if the container is visible before requesting the ad
+                    if (adColumn && window.getComputedStyle(adColumn).display !== 'none') {
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    }
+                </script>
+            </div>
+        </div>
+
+    </div><!-- end .page-wrapper -->
+</body>
+
+</html>
